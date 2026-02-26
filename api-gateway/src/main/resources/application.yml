@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: subscription
+          uri: lb://SUBSCRIPTION-SERVICE
+          predicates:
+            - Path=/subscription/**
+        - id: email
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/email/**
+        - id: log
+          uri: lb://LOG-SERVICE
+          predicates:
+            - Path=/log/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
